@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS finance.personal.receipt (
+    id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    photo VARCHAR(255) NOT NULL UNIQUE,
+    store VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMPTZ,
+    tax FLOAT NOT NULL,
+    total FLOAT NOT NULL
+);
