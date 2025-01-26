@@ -1,33 +1,41 @@
 import logging
 import os
 
-from config.settings import settings
+from app.config.settings import settings
 from app.utils.slack_tools import Slack
-
 
 # Logging paths
 log_filename = f"execution_time={settings.execution_time}.log"
-log_target = os.path.join(settings.logging_target, f"{settings.executation_day}", log_filename)
+log_target = os.path.join(settings.logging_dir, f"{settings.executation_day}", log_filename)
 
 # Create local dirname if it doesn't exist
 os.makedirs(os.path.dirname(log_target), exist_ok=True)
 
 # Logging configurations
+logging.getLogger("ppocr").setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-# Create handlers
-stream_handler = logging.StreamHandler()
-file_handler = logging.FileHandler(log_target)
+# Clear any existing handlers from parent loggers
+logger.handlers.clear()
 
-# Set format to handlers
-log_fomatter = logging.Formatter("[%(asctime)s] %(levelname)s - %(message)s")
-stream_handler.setFormatter(log_fomatter)
-file_handler.setFormatter(log_fomatter)
+# Prevent propagation to avoid inheriting settings from parent loggers
+logger.propagate = False
 
-# Add handlers to logger
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
+# Check if handlers already exist to avoid duplicates
+if not logger.hasHandlers():
+    # Create handlers
+    stream_handler = logging.StreamHandler()
+    file_handler = logging.FileHandler(log_target)
+
+    # Set format to handlers
+    log_fomatter = logging.Formatter("[%(asctime)s] %(levelname)s - %(message)s")
+    stream_handler.setFormatter(log_fomatter)
+    file_handler.setFormatter(log_fomatter)
+
+    # Add handlers to logger
+    logger.addHandler(stream_handler)
+    logger.addHandler(file_handler)
 
 
 def log_msg(message, slack_log=False, add_breakline=False):

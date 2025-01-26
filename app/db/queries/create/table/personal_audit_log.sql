@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS finance.personal.audit_log (
     new_data JSONB
 );
 
-CREATE INDEX idx_audit_log_table_name ON finance.personal.audit_log (table_name);
+CREATE INDEX IF NOT EXISTS idx_audit_log_table_name ON finance.personal.audit_log (table_name);

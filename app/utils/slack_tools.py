@@ -35,6 +35,8 @@ class Slack:
 
         with open(saved_file_path, "wb") as f:
             f.write(response.content)
+        
+        return saved_file_path
 
     def post_message(self, channel, message):
         self.client.chat_postMessage(channel=channel, text=message)

@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from urllib.parse import quote
+
 
 # Common settings for all environments
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
@@ -19,14 +21,24 @@ class Settings:
     slack_success_channel: str = os.environ.get("SLACK_SUCCESS_CHANNEL")
     slack_error_channel: str = os.environ.get("SLACK_ERROR_CHANNEL")
     # Configurations
-    logging_target: str = os.environ.get("SLACK_ERROR_CHANNEL")
+    slack_receipt_dir: str = os.environ.get("SLACK_RECEIPT_DIR")
+    logging_dir: str = os.environ.get("LOGGING_DIR")
     # Databases
+    based_db_url:str = "{}+{}://{}:{}@{}:{}/{}"
     finance_db: str = os.environ.get("FINANCE_DATABASE")
     finance_db_type: str = os.environ.get("FINANCE_DATABASE_TYPE")
+    finance_db_driver: str = os.environ.get("FINANCE_DATABASE_DRIVER")
     finance_db_host: str = os.environ.get("FINANCE_DATABASE_HOST")
     finance_db_username: str = os.environ.get("FINANCE_DATABASE_USERNAME")
     finance_db_password: str = os.environ.get("FINANCE_DATABASE_PASSWORD")
     finance_db_port: str = os.environ.get("FINANCE_DATABASE_PORT")
+    finance_db_url: str = based_db_url.format(finance_db_type,
+                                              finance_db_driver,
+                                              finance_db_username,
+                                              quote(finance_db_password),
+                                              finance_db_host,
+                                              finance_db_port,
+                                              finance_db)
     # Paddle OCR Model
     ocr_language: str = os.environ.get("OCR_LANGUAGE")
     ocr_version: str = os.environ.get("OCR_VERSION")
@@ -43,3 +55,4 @@ if __name__ == "__main__":
     print(settings.slack_app_token)
     print(settings.slack_success_channel)
     print(settings.slack_error_channel)
+    print(settings.finance_db_url)
