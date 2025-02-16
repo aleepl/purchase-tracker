@@ -4,14 +4,17 @@ import re
 import copy
 import numpy as np
 import pandas as pd
+import logging
 from paddleocr import PaddleOCR
-from app.config.settings import settings, BASE_DIR
-from app.db.database import Database
-from app.utils.logger import log_msg
-from app.utils.slack_tools import Slack
-from app.utils.utility import identify_date_format
+from config.settings import settings, BASE_DIR
+from db.database import Database
+from utils.logger import log_msg
+from utils.slack_tools import Slack
+from utils.utility import identify_date_format
 from datetime import datetime
-from app.db.models.ingest_receipt import IngestReceipt
+from db.models.ingest_receipt import IngestReceipt
+
+logging.getLogger("ppocr").setLevel(logging.WARNING)
 
 def transform(receipt_path: str) -> pd.DataFrame:
     # Parameters
@@ -241,7 +244,7 @@ def insert_receipt(file_id):
     finance_session = finance_db.get_session()
 
     # Open queries
-    with open(os.path.join(BASE_DIR,"app","db","queries","extract","ingest_receipt.sql"),"r") as query:
+    with open(os.path.join(BASE_DIR,"db","queries","extract","ingest_receipt.sql"),"r") as query:
         old_receipt_query = query.read()
 
     # Download file

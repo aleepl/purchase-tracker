@@ -5,7 +5,7 @@ from urllib.parse import quote
 
 
 # Common settings for all environments
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 DOTENV_PATH = os.path.join(BASE_DIR,".env")
 
 # Load environment variables

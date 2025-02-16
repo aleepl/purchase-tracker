@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.db.models.base import BaseTable
+from db.models.base import BaseTable
 from sqlalchemy import text, UniqueConstraint, Index, Identity, Column, Integer, String, TIMESTAMP, JSON
 
 class PersonalAuditLog(BaseTable):

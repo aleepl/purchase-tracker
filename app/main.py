@@ -1,9 +1,9 @@
 import argparse
-from app.db.init import init
-from app.etl.ingest.receipt import insert_receipt
-from app.etl.personal.purchase import insert_purchase
-from app.etl.personal.item import insert_item
-from app.utils.logger import log_msg
+from db.init import init
+from etl.ingest.receipt import insert_receipt
+from etl.personal.purchase import insert_purchase
+from etl.personal.item import insert_item
+from utils.logger import log_msg
 
 @log_msg(message="Purchase tracker pipeline", slack_log=True, add_breakline=False)
 def main():

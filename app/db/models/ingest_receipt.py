@@ -1,4 +1,4 @@
-from app.db.models.base import BaseTable
+from db.models.base import BaseTable
 from sqlalchemy import UniqueConstraint, Identity, Column, Integer, String, TIMESTAMP, FLOAT, BOOLEAN
 
 class IngestReceipt(BaseTable):

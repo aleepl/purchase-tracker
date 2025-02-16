@@ -1,9 +1,9 @@
 import os
 import pandas as pd
-from app.db.database import Database
-from app.config.settings import settings, BASE_DIR
-from app.db.models.personal_item import PersonalItem
-from app.utils.logger import log_msg
+from db.database import Database
+from config.settings import settings, BASE_DIR
+from db.models.personal_item import PersonalItem
+from utils.logger import log_msg
 
 def transform(df_purchase, df_receipt):
     # Merge purchase id
@@ -58,11 +58,11 @@ def insert_item():
     finance_session = finance_db.get_session()
 
     # Open queries
-    with open(os.path.join(BASE_DIR,"app","db","queries","extract","personal_purchase.sql"),"r") as query:
+    with open(os.path.join(BASE_DIR,"db","queries","extract","personal_purchase.sql"),"r") as query:
         old_purchase_query = query.read()
-    with open(os.path.join(BASE_DIR,"app","db","queries","extract","personal_item.sql"),"r") as query:
+    with open(os.path.join(BASE_DIR,"db","queries","extract","personal_item.sql"),"r") as query:
         old_item_query = query.read()
-    with open(os.path.join(BASE_DIR,"app","db","queries","extract","ingest_receipt.sql"),"r") as query:
+    with open(os.path.join(BASE_DIR,"db","queries","extract","ingest_receipt.sql"),"r") as query:
         old_receipt_query = query.read()
 
     # Extract

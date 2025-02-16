@@ -1,8 +1,8 @@
 import logging
 import os
 
-from app.config.settings import settings
-from app.utils.slack_tools import Slack
+from config.settings import settings
+from utils.slack_tools import Slack
 
 # Logging paths
 log_filename = f"execution_time={settings.execution_time}.log"

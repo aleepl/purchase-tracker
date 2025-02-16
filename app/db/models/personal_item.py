@@ -1,4 +1,4 @@
-from app.db.models.base import BaseTable
+from db.models.base import BaseTable
 from sqlalchemy import ForeignKey, UniqueConstraint, Identity, Column, Integer, String, FLOAT, BOOLEAN
 
 class PersonalItem(BaseTable):

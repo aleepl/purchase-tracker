@@ -1,8 +1,10 @@
 import os
-from app.db.models.base import BaseTable
-from app.db.database import Database
-from app.config.settings import settings,BASE_DIR
+from db.models.base import BaseTable
+from db.database import Database
+from config.settings import settings,BASE_DIR
+from utils.logger import log_msg
 
+@log_msg(message="Database initiation", slack_log=True, add_breakline=True)
 def init():
     # Database initiation
     finance_db = Database(connection_string=settings.finance_db_url,autocommit=True)
@@ -22,14 +24,14 @@ def init():
     # Functions
     functions = ["audit_change"]
     for function in functions:    
-        with open(os.path.join(BASE_DIR,"app","db","queries","create","function",f"{schema}_{function}.sql"), "r") as query_file:
+        with open(os.path.join(BASE_DIR,"db","queries","create","function",f"{schema}_{function}.sql"), "r") as query_file:
             query = query_file.read()
             finance_db.execute_update(query)
 
     # Triggers
     triggers = ["receipt_audit"]
     for trigger in triggers:    
-        with open(os.path.join(BASE_DIR,"app","db","queries","create","trigger",f"{schema}_{trigger}.sql"), "r") as query_file:
+        with open(os.path.join(BASE_DIR,"db","queries","create","trigger",f"{schema}_{trigger}.sql"), "r") as query_file:
             query = query_file.read()
             finance_db.execute_update(query)
             
@@ -39,7 +41,7 @@ def init():
     # Functions
     functions = ["audit_change"]
     for function in functions:
-        with open(os.path.join(BASE_DIR,"app","db","queries","create","function",f"{schema}_{function}.sql"), "r") as query_file:
+        with open(os.path.join(BASE_DIR,"db","queries","create","function",f"{schema}_{function}.sql"), "r") as query_file:
             query = query_file.read()
             finance_db.execute_update(query)
 
@@ -47,7 +49,7 @@ def init():
     triggers = ["item_audit",
                 "purchase_audit"]
     for trigger in triggers:    
-        with open(os.path.join(BASE_DIR,"app","db","queries","create","trigger",f"{schema}_{trigger}.sql"), "r") as query_file:
+        with open(os.path.join(BASE_DIR,"db","queries","create","trigger",f"{schema}_{trigger}.sql"), "r") as query_file:
             query = query_file.read()
             finance_db.execute_update(query)
 
